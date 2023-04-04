@@ -1,0 +1,34 @@
+1. Устанавливаем репозиторий локально с помощью команд:
+git clone https://github.com/anfederico/Flaskex
+cd Flaskex
+pip install -r requirements.txt
+python3 app.py
+2. Появляются следующие ошибки при запуске приложения:
+File "/home/sergei/Simbirsoft/Flaskex/app.py", line 4, in <module>
+    from scripts import forms
+  File "/home/sergei/Simbirsoft/Flaskex/scripts/forms.py", line 6, in <module>
+    class LoginForm(Form):
+  File "/home/sergei/Simbirsoft/Flaskex/scripts/forms.py", line 7, in LoginForm
+    username = StringField('Username:', validators=[validators.required(), validators.Length(min=1, max=30)])
+AttributeError: module 'wtforms.validators' has no attribute 'required'
+3. Предлагаемые способы решения ошибки:
+
+Заменить в файле forms.py в строчках c username и password validators.required() на validators.DataRequired() после чего приложение запустится
+
+4. Далее в директории flaskex создаём Dockefile на основе образа Python
+
+5. Затем можно создать Docker контейнер с помощью команды:
+
+docker build -t flaskex:latest .
+
+Эта команда создаст Docker контейнер с именем flaskex на основе Dockerfile, находящегося в текущей директории.
+
+Проверить, что контейнер запускается локально:
+
+docker run -p 5000:5000 flaskex
+
+Эта команда запустит Docker контейнер и перенаправит порт 5000 из контейнера на порт 5000 на локальной машине. После этого можно открыть веб-браузер и перейти на страницу http://localhost:5000, чтобы убедиться, что приложение работает в контейнере.
+6. Далее в директории Flaskex создаём docker-compose.yml и потом при помощи команды docker-compose up
+сможем запустить веб-приложении, перейдя по адресу http://localhost:5000
+7. Создаём директорию, в которую поместим Dockerfile, docker-compose.yml и файл с заметками notes.txt. В этой директории инициализируйте локальный репозиторий с помощью команды git init и связываем его с репозиторием на GitHub.Добавляем созданные файлы в репозитории на гитхабе и делаем коммит: git add .
+git commit -m "The first commit". Отправляем изменения на сервер командой git push -u origin master. Проверяем появились ли файлы.
